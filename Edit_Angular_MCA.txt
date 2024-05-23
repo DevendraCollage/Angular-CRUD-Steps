@@ -1,0 +1,44 @@
+API Steps for Edit in Angular
+
+Step 01: create variable id in add-faculty.component.ts
+id = -1;
+
+Step 02: create a route in app-routing.module.ts
+  {path:'faculty/edit/:id',component:AddFacultyComponent}
+
+
+Step 03: inject ActivatedRoute
+private _activatedRoute:ActivatedRoute
+
+Step 04: create ngOnInit method
+ngOnInit(){
+    this.id = Number(this._activatedRoute.snapshot.paramMap.get('id'));
+    if(this.id>0){
+      this._api.getById(this.id).subscribe((res:any)=>{
+        this.data.FacultyName = res.FacultyName;
+        this.data.FacultyImage = res.FacultyImage;
+
+      })
+    }
+  }
+
+Step 05: Render proper button with ngIf
+<button *ngIf="id==0">Add</button>
+<button *ngIf="id>0">Edit</button> 
+
+Step 06: create update method in api
+update(form:any,id:number){
+    return this._http.put(this.apiUrl+"/"+id,form);
+  }
+
+Step 07: Updated save method
+ if(this.id==0){
+      this._api.insert(form).subscribe(res=>{
+        this._router.navigate(['faculty']);
+      });
+    }
+    else{
+      this._api.update(form,this.id).subscribe(res=>{
+        this._router.navigate(['faculty']);
+      });
+    }

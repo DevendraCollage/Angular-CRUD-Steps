@@ -1,0 +1,30 @@
+Add API
+
+Step 01: create component using "ng g c add-faculty"
+
+Step 02: add route in app-routing.module.ts file
+{path:'faculty/add', component:AddFacultyComponent}
+
+Note: add this before detail route
+
+Step 03: Create a form in add-faculty
+<form #myForm="ngForm" class="my-5" (ngSubmit)="save(myForm.value)">
+    <input type="text" name="FacultyName" [(ngModel)]="data.FacultyName"/>
+    <input type="text" name="FacultyImage" [(ngModel)]="data.FacultyImage"/>
+    <button>Save</button>    
+</form>
+
+Step 04: Inject api service in add-faculty.component.ts
+  constructor(private _api:ApiFacultyService){}  
+
+Step 05: create insert method in api-faculty.service.ts
+insert(form:any){
+    return this._http.post(this.apiUrl,form);
+  }
+  
+Step 06: Create a method save(form)
+save(form:any){
+    this._api.insert(form).subscribe(res=>{
+      console.log('data added')
+    });
+  }

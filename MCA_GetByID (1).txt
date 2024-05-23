@@ -1,0 +1,53 @@
+steps for getByID in Angular
+
+Step 01 : create a component using "ng g c detail-faculty"
+
+Step 02: add route in app-routing.module.ts
+{path:'faculty/:id',component:DetailFacultyComponent}
+
+Step 03: add new method called getById in api-faculty.service.ts
+getById(id:number){
+  return this._http.get(this.apiUrl+"/"+id);
+}
+
+Step 04: inject service in detail-faculty.component.ts
+constructor(private _apiFaculty:ApiFacultyService){}
+
+Step 05: create Faculty (model) object in detail-faculty.component.ts
+data = new Faculty();
+
+Step 06: call getById method in ngOnInit() methid of detail-faculty.component.ts
+ngOnInit(){
+    this._apiFaculty.getById(9).subscribe((res:any)=>{
+      this.data = res;
+    });
+  }
+
+Step 07: interpolate related data in detail-faculty.component.html
+
+Step 08: inject ActivatedRoute in detail-faculty.component.ts
+constructor(private _apiFaculty:ApiFacultyService, private _activatedRoute: ActivatedRoute){}
+
+Step 09: get current parameter using 
+let id = Number(this._activatedRoute.snapshot.paramMap.get('id'));
+
+Step 10: pass this id to api call
+ngOnInit(){
+    this._apiFaculty.getById(id).subscribe((res:any)=>{
+      this.data = res;
+    });
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

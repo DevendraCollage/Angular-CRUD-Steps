@@ -1,0 +1,46 @@
+Steps for getAll api in Angular
+
+Step 01: create a faculty component using "ng g c faculty"
+
+Step 02: create a faculty service using "ng g s api-faculty"
+
+Step 03: inject HttpClient in api-faculty.service.ts
+constructor(private _http: HttpClient) { }
+
+Step 04: import HttpClientModule in app.module.ts
+
+
+Step 05: create getAll method in api-faculty.service.ts
+getAll(){
+    
+}
+
+Step 06: call get method of http with apiUrl from getAll method
+getAll(){
+  return this._http.get(this.apiUrl);
+}
+
+Step 07: inject ApiFaculty in faculty.component.ts
+constructor(private _apiFaculty:ApiFacultyService){}
+
+
+Step 08: create ngOnInit method in faculty.component.ts
+ngOnInit(){
+    
+}
+
+Step 09: call to getAll method from ngOnInit in faculty.component.ts and subscribe to it
+ngOnInit(){
+  this._apiFaculty.getAll().subscribe((res)=>{
+      console.log(res);
+  });
+}
+
+
+
+
+
+
+
+
+
